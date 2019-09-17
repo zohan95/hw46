@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="container text-center mt-5">
+    <h1>Are you sure want to delete?</h1>
+    <form method="POST" action="{% url "todos_delete_url" articles=articles %}" class="text-center">
+        {% csrf_token %}
+        <p><input type="submit" value="Confirm" class="btn btn-danger mr-5">
+        <a href="{% url "main_url"%}" class="btn btn-outline-info">Cancel</a></p>
+    </form>
+    </div>
+{% endblock %}

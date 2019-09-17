@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block content %}
+    <form action="{% url 'main_url' %}" method="post">
+        {% csrf_token %}
+        <div class="container mt-5">
+            <div class="row">
+                {% for i in articles %}
+                    <div class="col-sm-4 my-2">
+                        <div class="card card-1 ">
+                            <div id="question_text_{{ i.pk }}">
+                                <div class="card-body">
+                                    <p class="card-text">{{ i.description }}</p>
+                                    <hr>
+                                    {% for j in choices %}
+                                        {% if i.status in j %}
+                                            <p class="card-text">Статус: {{ j.1 }}</p>
+                                        {% endif %}
+                                    {% endfor %}
+                                    <hr>
+                                    {% if i.date %}
+                                        <p>{{ i.date }}</p>
+                                    {% else %}
+                                        <p>Без срока</p>
+                                    {% endif %}
+                                    <a href="{% url 'todo_detail_url' i.pk %}" class="btn btn-primary">Details</a>
+                                    <a href="{% url 'todo_edit_url' i.pk %}" class="btn btn-success">Edit</a>
+                                    <a href="{% url 'todo_delete_url' i.pk %}" class="btn btn-danger">Delete</a>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input todo_checkbox" autocomplete="off" type="checkbox"
+                                               id="inlineCheckbox1" value="{{ i.pk }}"
+                                               onChange="myFunction(question_text_{{ i.pk }}, this)" name="item">
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                {% endfor %}
+            </div>
+        </div>
+        <div class="plus-button">
+            <a href="{% url 'todo_create_url' %}" class="text-decoration-none">+</a>
+        </div>
+        <div class="minus-button">
+            <button type="submit">-</button>
+        </div>
+    </form>
+{% endblock %}
